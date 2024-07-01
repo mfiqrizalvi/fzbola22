@@ -24,6 +24,11 @@ const nextConfig = {
                         key: 'X-Xss-Protection',
                         value:
                             "1; mode=block",
+                    },
+                    {
+                        key: 'Referrer-Policy',
+                        value:
+                            "strict-origin-when-cross-origin",
                     }
                 ],
             },

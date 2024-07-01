@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import Image from 'next/image';
 import styles from './Component.module.css';
-import BottomBannerAds from './BottomBannerAds';
 
 interface MatchData {
   match_id: string;
@@ -86,7 +85,7 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
   );
 
   if (!data) {
-    return <div style={{textAlign:'center',fontSize:'10px',fontWeight:'bold'}}>LOADING...</div>;
+    return <div style={{textAlign:'center',fontSize:'10px',fontWeight:'bold'}}><br/>LOADING...</div>;
   }
 
   if (error) {
@@ -97,13 +96,6 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
 
   return (
     <div style={{textTransform:'uppercase'}}>
-      {matchData.venue && (
-        <div className={styles.infobox} style={{ textAlign: 'center', fontSize:'10px' }}>
-          <span style={{ fontWeight: 'bold' }}>
-            {matchData.venue.name} - {matchData.venue.city}
-          </span>
-        </div>
-      )}
       {matchData.goals && matchData.goals.length > 0 && (
         <div className={styles.infobox}>
           <span style={{ fontWeight: 'bold' }}>Goals :</span>
@@ -117,9 +109,6 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
           ))}
         </div>
       )}
-      <div className={styles.iklan3}>
-        <BottomBannerAds />
-      </div>
       {matchData.home_players && matchData.away_players && matchData.home_players.length > 0 && matchData.away_players.length > 0 && (
         <>
         <div style={{padding:'2px'}}>

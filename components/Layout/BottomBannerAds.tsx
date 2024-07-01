@@ -12,7 +12,7 @@ const fetcher = async () => {
   return response.data;
 };
 
-export default function TopBannerAds() {
+export default function BottomBannerAds() {
   const { data: topbanner, error } = useSWR('/btmads', fetcher);
 
   if (error) {

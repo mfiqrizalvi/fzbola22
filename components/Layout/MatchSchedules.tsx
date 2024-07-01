@@ -74,7 +74,8 @@ export default function MatchSchedules() {
 
   return (
     <>
-      <div className={styles.menuh}>
+      <div className={styles.menuh1}>
+        <span>
         <Image
           className={styles.iconh}
           src="/assets/img/match.webp"
@@ -84,7 +85,10 @@ export default function MatchSchedules() {
           priority
         />
         {' '}
-        <span>LIVE MATCH</span>
+        LIVE MATCH</span>
+        <span>
+          <div id="ur-time"/>
+        </span>
       </div>
       <div className={styles.onmatchbox}>
         {activeMatches.length === 0 ? (

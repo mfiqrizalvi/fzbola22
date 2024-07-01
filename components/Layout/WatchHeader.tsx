@@ -40,6 +40,23 @@ const WatchHeader: React.FC<MatchDataProps> = ({
   }
 
   return (
+    <div style={{ textTransform: 'uppercase' }}>
+    <div className={styles.date} style={{textAlign:'center'}}>
+      {data.venue && (
+          <span style={{ fontWeight: 'bold',fontSize:'9px' }}>
+            <Image
+              className={styles.iconh}
+              src="/assets/img/marker.png"
+              alt="Live Match"
+              width={14}
+              height={14}
+              priority
+            />
+            {data.venue.name} - {data.venue.city}
+          </span>
+      )}
+    </div>
+    <div className={styles.watchhead}>
     <table>
       <tbody>
       <tr style={{ border: '1px solid #3D3D3D' }}>
@@ -52,7 +69,7 @@ const WatchHeader: React.FC<MatchDataProps> = ({
               height={14}
               priority
             />
-           <span id={styles.upsmatchtxt}>
+           <span id={styles["upsmatchtxt"]}>
             &nbsp;&nbsp;&nbsp;{home_team_name}
           </span>
         </td>
@@ -102,7 +119,7 @@ const WatchHeader: React.FC<MatchDataProps> = ({
           </span>
         </td>
         <td className={styles.col5} style={{ textAlign: 'right' }}>
-          <span id={styles.upsmatchtxt}>
+          <span id={styles["upsmatchtxt"]}>
             {away_team_name}&nbsp;&nbsp;&nbsp;
           </span>
             <Image
@@ -117,7 +134,9 @@ const WatchHeader: React.FC<MatchDataProps> = ({
       </tr>
     </tbody>
   </table>  
-  );
+  </div>
+  </div>
+  ); 
 };
 
 export default WatchHeader;

@@ -135,9 +135,9 @@ export default function UpcomingMatch() {
               console.error('nmatches.start_time is undefined');
               return false;
             }
-          }).slice(0, showMore? data.length : 5).map((nmatches: MatchData) => {
-            if (countdowns[nmatches.id]) {
-              const countdown = countdowns[nmatches.id];
+          }).slice(0, showMore ? data.length : 5).map((nmatches: MatchData) => {
+            const countdown = countdowns[nmatches.id]; // Add a check here
+            if (countdown !== undefined) {
               const hours = Math.floor(countdown / 3600000);
               const minutes = Math.floor((countdown % 3600000) / 60000);
               const seconds = Math.floor((countdown % 60000) / 1000);
@@ -193,7 +193,6 @@ export default function UpcomingMatch() {
                 </div>
               );
             } else {
-              console.error(`countdowns[${nmatches.id}] is undefined`);
               return null;
             }
           })

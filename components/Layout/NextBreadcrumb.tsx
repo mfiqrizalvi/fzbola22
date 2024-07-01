@@ -2,7 +2,6 @@
 import React, { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import styles from './Component.module.css'
 
 type TBreadCrumbProps = {
   homeElement: ReactNode
@@ -22,15 +21,11 @@ const NextBreadcrumb = ({
   const pathNames = paths.split('/').filter((path) => path)
 
   if (pathNames.length === 0) {
-    return (
-      <div className={styles.spacebc}>
-        <span>{homeElement}</span>
-      </div>
-    )
+    return null;
   }
 
   return (
-    <div className={styles.spacebc}>
+    <div>
       <Link href="/" className={paths !== "/" ? activeClasses : ""}>
         <span>{homeElement}</span>
       </Link>

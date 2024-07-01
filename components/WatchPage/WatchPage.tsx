@@ -7,7 +7,10 @@ import styles from '../Layout/Component.module.css';
 import WatchHeader from '../Layout/WatchHeader';
 import MatchInfo from '../Layout/MatchInfo';
 import SocialShare from '../Layout/SocialShare';
+import BottomBannerAds from '../Layout/BottomBannerAds';
 import { addListener, launch } from 'devtools-detector';
+import News from '../Layout/News';
+import Image from 'next/image';
 
 interface SoccerSchedule {
   id: string;
@@ -42,9 +45,9 @@ const WatchsPage: NextPage = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await fetch(`${apiWURL}${id}`); // use apiWURL instead of process.env.NEXT_PUBLIC_API_WATCH
+        const response = await fetch(`${apiWURL}${id}`); 
         const data = await response.json();
-        setSchedule(data[0]); // assuming the API returns an array with a single object
+        setSchedule(data[0]); 
         const startTime = new Date(data[0].start_time).getTime();
         const currentTime = new Date().getTime();
         if (currentTime < startTime) {
@@ -59,7 +62,7 @@ const WatchsPage: NextPage = () => {
     };
 
     fetchSchedule();
-  }, [id, apiWURL]); // include apiWURL in the dependency array
+  }, [id, apiWURL]); 
 
   useEffect(() => {
     if (countdown !== null) {
@@ -68,7 +71,7 @@ const WatchsPage: NextPage = () => {
       }, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [countdown, apiWURL]); // include apiWURL in the dependency array
+  }, [countdown, apiWURL]); 
 
   if (!schedule) {
     return (
@@ -99,27 +102,54 @@ const WatchsPage: NextPage = () => {
       </div>
     );
   }
-
-
+  
   return (
     <div>
       {schedule && (
         <div>
-          <div className={styles.watchhead} style={{textTransform:'uppercase'}}>
-            <div>
-                  <WatchHeader
-                    home_team_logo_url={schedule.home_team_logo_url}
-                    away_team_logo_url={schedule.away_team_logo_url}
-                    home_team_name={schedule.home_team_name}
-                    away_team_name={schedule.away_team_name}
-                    API_id={schedule.API_id}
-                    API_Url={`${apiURL}`}
-                  />
-            </div>
-          </div>
+              <WatchHeader
+                home_team_logo_url={schedule.home_team_logo_url}
+                away_team_logo_url={schedule.away_team_logo_url}
+                home_team_name={schedule.home_team_name}
+                away_team_name={schedule.away_team_name}
+                API_id={schedule.API_id}
+                API_Url={`${apiURL}`}
+              />
           <div className={styles.player}>
             <VideoPlayer embedUrl={`${playerUrl}${schedule.id}`} />
           </div>
+          <div className={styles.menuh1}>
+            <span>
+              <Image
+                className={styles.iconh}
+                src="/assets/img/chat.png"
+                alt="Live Match"
+                width={14}
+                height={14}
+                priority
+              />
+              {' '}
+              CHAT ROOM
+            </span>
+            <span>
+              <div id="ur-time" style={{paddingRight:'1em'}}/>
+            </span>
+          </div>
+              <div className={styles.onmatchbox}>
+                  <iframe
+                    src="https://www5.cbox.ws/box/?boxid=951772&boxtag=Y2o7NK"
+                    width="100%"
+                    height={250}
+                    allow="autoplay"
+                    frameBorder={0}
+                    marginHeight={0}
+                    marginWidth={0}
+                    scrolling="auto"
+                  />
+            </div>
+            <div className={styles.iklan2}>
+              <BottomBannerAds />
+            </div>  
           <div className={styles.matchinfo}>
             <MatchInfo
               home_team_name={schedule.home_team_name}
@@ -131,6 +161,7 @@ const WatchsPage: NextPage = () => {
           </div>
         </div>
       )}
+      <News />
     </div>
   );
 };
