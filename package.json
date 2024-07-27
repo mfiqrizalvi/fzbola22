@@ -1,6 +1,9 @@
 {
   "name": "fzbola22",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "FZBOLA22 is a FREE Live Football Streaming Site, featuring Premiere League, Bundesliga, La Liga, Serie A, BRI Liga 1, Liga 2, and More TOP Competitions.",
+  "repository": "https://github.com/mfiqrizalvi/fzbola22",
+  "author": "FZBOLA22 <fzbola22@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,13 +12,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^1.6.8",
-    "devtools-detector": "^2.0.17",
+    "@supabase/ssr": "^0.4.0",
+    "@supabase/supabase-js": "^2.44.2",
+    "adblock-detect-react": "^1.3.1",
+    "axios": "^1.7.2",
+    "devtools-detector": "^2.0.18",
     "moment-timezone": "^0.5.45",
-    "next": "14.2.3",
+    "next": "^14.2.4",
     "react": "^18",
-    "react-fast-marquee": "^1.6.4",
-    "react-share": "^5.1.0",
     "sharp": "^0.33.4",
     "swr": "^2.2.5"
   },

@@ -24,6 +24,11 @@ const nextConfig = {
                         key: 'X-Xss-Protection',
                         value:
                             "1; mode=block",
+                    },
+                    {
+                        key: 'Referrer-Policy',
+                        value:
+                            "strict-origin-when-cross-origin",
                     }
                 ],
             },
@@ -79,6 +84,30 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'upload.wikimedia.org',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.gstatic.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'dxymaqdjfrtyqwnjgzre.supabase.co',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'img.365live88.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'static.flashscore.com',
                 port: '',
                 pathname: '/**',
             },

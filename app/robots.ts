@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      allow: ['/', '/stream', '/stream/watch/*'],
-      disallow: '/stream/watch$', 
+      allow: '/',
+      disallow: '/watch/*', 
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   }

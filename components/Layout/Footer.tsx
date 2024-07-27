@@ -2,30 +2,51 @@
 import Link from "next/link";
 import Image from "next/image"; 
 import styles from './Component.module.css'
-import News from "./News";
+import { LinksBtm } from "./NavBtm";
 
 const Footer = () => {
   return (
     <>
       <footer>
-        <News />
-        <div className={styles.menu1}>
-        <h1>FZBOLA22 - Football Live Stream For Free</h1>
-      </div>
+        <div className={styles.menu1f}>
+          <h1>FZBOLA22</h1>&nbsp;-&nbsp;<h2>Football Live Stream For Free</h2>
+        </div>
         <section className={styles.desc}>
           <span>
-          FZBOLA22 - Situs Streaming Bola Terbaik dan Terpercaya - Streaming Sepak Bola Gratis untuk penggemar sepak bola yang ingin menonton liga-liga top dunia, turnamen besar, dan liga lokal Indonesia. Situs ini mudah digunakan tanpa registrasi dan 100% gratis. Untuk mempertahankan kualitas dan ketersediaan konten, bantuan dari teman-teman melalui donasi atau klik iklan sangat diperlukan agar kami tetap semangat dalam melakukan update dan perawatan setiap harinya.
+          FZBOLA22: Free Football Streaming Website. Discover the ultimate destination for Free Football Streaming - FZBOLA22. Enjoy live matches from top competitions like the Premier League, Bundesliga, La Liga, Serie A, Liga 1, Liga 2, and more, all at no cost. Our platform ensures a stable and fast streaming experience, eliminating the need for expensive streaming fees. With FZBOLA22, you can watch your favorite football matches without any additional charges. So, what are you waiting for? Access FZBOLA22 now and start streaming your favorite football matches online for free.
           </span>
-        </section>
-        <header className={styles.menu1}>
-          <h2>FZBOLA22 - Streaming Bola Gratis</h2>
-        </header>
-
-        <section className={styles.desc}>
+          <br/><br/>
+          <LinksBtm/>
+          <br/><br/>
+          <strong>&gt; </strong>
+          <Link href="https://x.com/fzbola22_online" rel="noopener noreferrer" target="_blank" className={styles.button}>
+          <Image
+            className={styles.iconimg}
+            src="/assets/img/x.png"
+            alt="X-FZBOLA22"
+            width={14}
+            height={14}
+            loading="lazy"
+          />
+          {" "}
           <span>
-            FZBOLA22 menawarkan streaming bola gratis untuk kompetisi top seperti Premier League, Bundesliga, La Liga, Serie A, Liga 1, Liga 2, dan lain-lain. Anda dapat menonton pertandingan favorit Anda secara online tanpa biaya. Situs ini menawarkan pengalaman streaming yang stabil dan cepat.
-            Dengan FZBOLA22, Anda tidak perlu khawatir tentang biaya streaming yang mahal. Situs ini menawarkan streaming bola secara gratis, sehingga Anda dapat menonton pertandingan bola favorit Anda tanpa harus mengeluarkan biaya tambahan. Jadi, tunggu apa lagi? Akses FZBOLA22 sekarang dan mulai menonton pertandingan bola favorit Anda secara online dan gratis.
+            @FZBOLA22_ONLINE<span></span>
           </span>
+        </Link>
+        <Link href="https://www.instagram.com/fzbola22" rel="noopener noreferrer" target="_blank" className={styles.button}>
+          <Image
+            className={styles.iconimg}
+            src="/assets/img/ig.png"
+            width={14}
+            height={14}
+            alt="INSTAGRAM-FZBOLA22"
+            loading="lazy"
+          />
+          {" "}
+          <span>
+            @FZBOLA22<span></span>
+          </span>
+        </Link>
         </section>
         <div className={styles.spacefoot}>
           <div className={styles.footc}>
@@ -63,12 +84,13 @@ const Footer = () => {
           <div className={styles.footer}>
             <span>Copyright © 2024 FZBOLA22</span>
             <div className={styles.footcount}>
-              <img
+            <img
                 className={styles.footcount}
                 src="https://www.easycounter.com/counter.php?fzbola22"
                 alt="Visitor-Counter"
                 width={78}
                 height={17}
+                loading="lazy"
               />
             </div>
           </div>

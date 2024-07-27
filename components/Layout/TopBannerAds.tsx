@@ -1,15 +1,18 @@
 'use client';
 import useSWR from 'swr';
-import axios from 'axios';
+import { supabase } from '@/utils/supabase/client';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Component.module.css' 
 
-const apiURL = process.env.NEXT_PUBLIC_API_TOPADS;
-
 const fetcher = async () => {
-  const response = await axios.get(`${apiURL}`);
-  return response.data;
+  const { data } = await supabase
+    .from('top_ads')
+    .select('*')
+    .limit(20)
+    .order('created_at', { ascending: true });
+
+  return data;
 };
 
 export default function TopBannerAds() {

@@ -6,8 +6,11 @@ import VideoPlayer from './PlayerVid';
 import styles from '../Layout/Component.module.css';
 import WatchHeader from '../Layout/WatchHeader';
 import MatchInfo from '../Layout/MatchInfo';
-import SocialShare from '../Layout/SocialShare';
+import ChatRoom from '../Layout/ChatRoom';
+import { supabase } from '@/utils/supabase/client';
 import { addListener, launch } from 'devtools-detector';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface SoccerSchedule {
   id: string;
@@ -24,7 +27,6 @@ const WatchsPage: NextPage = () => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const playerUrl = process.env.NEXT_PUBLIC_PLAYER_URL;
   const apiURL = process.env.NEXT_PUBLIC_API_MATCH;
-  const apiWURL = process.env.NEXT_PUBLIC_API_WATCH;
 
   useEffect(() => {
     const view = document.createElement('div');
@@ -42,24 +44,29 @@ const WatchsPage: NextPage = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await fetch(`${apiWURL}${id}`); // use apiWURL instead of process.env.NEXT_PUBLIC_API_WATCH
-        const data = await response.json();
-        setSchedule(data[0]); // assuming the API returns an array with a single object
-        const startTime = new Date(data[0].start_time).getTime();
-        const currentTime = new Date().getTime();
-        if (currentTime < startTime) {
-          const countdownTime = startTime - currentTime;
-          setCountdown(countdownTime);
-        } else {
-          setCountdown(null);
+        const { data } = await supabase
+         .from('match_data')
+         .select('id, home_team_logo_url, away_team_logo_url, home_team_name, away_team_name, API_id, start_time')
+         .eq('id', id);
+        
+        if (data && data.length > 0) {
+          setSchedule(data[0]); 
+          const startTime = new Date(data[0].start_time).getTime();
+          const currentTime = new Date().getTime();
+          if (currentTime < startTime) {
+            const countdownTime = startTime - currentTime;
+            setCountdown(countdownTime);
+          } else {
+            setCountdown(null);
+          }
         }
       } catch (error) {
         console.error(error);
       }
     };
-
+  
     fetchSchedule();
-  }, [id, apiWURL]); // include apiWURL in the dependency array
+  }, [id]); 
 
   useEffect(() => {
     if (countdown !== null) {
@@ -68,17 +75,25 @@ const WatchsPage: NextPage = () => {
       }, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [countdown, apiWURL]); // include apiWURL in the dependency array
+  }, [countdown]); 
 
   if (!schedule) {
     return (
-      <div className={styles.match} id={styles["lmatch"]}>
+      <div
+        className={styles.loadbox}
+        style={{padding:'3em'}}
+      >
         <center>
-          <video width={116} height={30} autoPlay loop muted playsInline>
-            <source src="/assets/img/loads.webm" type="video/webm" />
-         </video>
+        <Image
+          src='https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif'
+          height={20}
+          width={20}
+          alt='Loading'
+          loading="lazy"
+        />
+        <br/>
+        <span>Loading Player....</span>
         </center>
-        <h2 style={{ textAlign: 'center' }}>LOADING PLAYER....</h2>
       </div>
     );
   }
@@ -99,27 +114,39 @@ const WatchsPage: NextPage = () => {
       </div>
     );
   }
-
-
+  
   return (
     <div>
       {schedule && (
         <div>
-          <div className={styles.watchhead} style={{textTransform:'uppercase'}}>
-            <div>
-                  <WatchHeader
-                    home_team_logo_url={schedule.home_team_logo_url}
-                    away_team_logo_url={schedule.away_team_logo_url}
-                    home_team_name={schedule.home_team_name}
-                    away_team_name={schedule.away_team_name}
-                    API_id={schedule.API_id}
-                    API_Url={`${apiURL}`}
-                  />
-            </div>
-          </div>
+              <WatchHeader
+                home_team_logo_url={schedule.home_team_logo_url}
+                away_team_logo_url={schedule.away_team_logo_url}
+                home_team_name={schedule.home_team_name}
+                away_team_name={schedule.away_team_name}
+                API_id={schedule.API_id}
+                API_Url={`${apiURL}`}
+              />
           <div className={styles.player}>
             <VideoPlayer embedUrl={`${playerUrl}${schedule.id}`} />
+            <div className={styles.donate} data-nosnippet>
+          <table style={{ width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
+            <tr>
+              <td>
+                <Link href="https://bit.ly/3xd9pNY" rel="noopener noreferrer" target="_blank" className={styles.link}>
+                DONATE - SAWERIA
+                </Link>
+              </td>
+              <td>
+                <Link href="https://bit.ly/4cnOck8" rel="noopener noreferrer" target="_blank" className={styles.link}>
+                DONATE - KO-FI
+                </Link>
+              </td>
+            </tr>
+          </table>
+        </div>
           </div>
+            <ChatRoom/>
           <div className={styles.matchinfo}>
             <MatchInfo
               home_team_name={schedule.home_team_name}
@@ -127,7 +154,6 @@ const WatchsPage: NextPage = () => {
               API_id={schedule.API_id}
               API_Url={`${apiURL}`}
             />
-            <SocialShare />
           </div>
         </div>
       )}

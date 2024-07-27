@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import Image from 'next/image';
 import styles from './Component.module.css';
-import BottomBannerAds from './BottomBannerAds';
 
 interface MatchData {
   match_id: string;
@@ -86,11 +85,22 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
   );
 
   if (!data) {
-    return <div style={{textAlign:'center',fontSize:'10px',fontWeight:'bold'}}>LOADING...</div>;
+    return (
+      <div
+        className={styles.onmatch}
+        style={{padding:'1em'}}
+      >
+        <center>
+        <video width={20} height={20} autoPlay loop muted playsInline>
+            <source src="/assets/img/loading.webm" type="video/webm" />
+         </video>
+        </center>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div style={{textAlign:'center'}}>Error: {error.message}</div>;
   }
 
   const matchData = data as MatchData;
@@ -100,7 +110,7 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
       {matchData.venue && (
         <div className={styles.infobox} style={{ textAlign: 'center', fontSize:'10px' }}>
           <span style={{ fontWeight: 'bold' }}>
-            {matchData.venue.name} - {matchData.venue.city}
+            {matchData.venue.name}
           </span>
         </div>
       )}
@@ -117,9 +127,6 @@ const MatchInfo: React.FC<MatchDataProps> = ({ home_team_name, away_team_name, A
           ))}
         </div>
       )}
-      <div className={styles.iklan3}>
-        <BottomBannerAds />
-      </div>
       {matchData.home_players && matchData.away_players && matchData.home_players.length > 0 && matchData.away_players.length > 0 && (
         <>
         <div style={{padding:'2px'}}>

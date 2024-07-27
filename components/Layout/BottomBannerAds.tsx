@@ -1,26 +1,29 @@
 'use client';
 import useSWR from 'swr';
-import axios from 'axios';
+import { supabase } from '@/utils/supabase/client';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Component.module.css'
 
-const apiURL = process.env.NEXT_PUBLIC_API_BOTTOMADS;
-
 const fetcher = async () => {
-  const response = await axios.get(`${apiURL}`);
-  return response.data;
+  const { data } = await supabase
+    .from('bottom_ads')
+    .select('*')
+    .limit(20)
+    .order('created_at', { ascending: true });
+
+  return data;
 };
 
-export default function TopBannerAds() {
-  const { data: topbanner, error } = useSWR('/btmads', fetcher);
+export default function BottomBannerAds() {
+  const { data: bottombanner, error } = useSWR('/btmads', fetcher);
 
   if (error) {
     console.error(error);
     return <div>Error fetching data</div>;
   }
 
-  if (!topbanner || topbanner.length === 0) {
+  if (!bottombanner || bottombanner.length === 0) {
     return (
         <Link aria-label="Advertise Here" rel="sponsored" href="mailto:fzbola22@gmail.com" target="_blank">
           <video className={styles.imgads} preload="metadata" autoPlay loop muted playsInline>
@@ -33,7 +36,7 @@ export default function TopBannerAds() {
 
   return (
     <>
-      {topbanner.map((banner: { id: number; ads_link: string; ads_img: string; ads_alt: string }) => (
+      {bottombanner.map((banner: { id: number; ads_link: string; ads_img: string; ads_alt: string }) => (
         <div key={banner.id}>
           <Link rel="sponsored" href={banner.ads_link} target="_blank">
             <Image

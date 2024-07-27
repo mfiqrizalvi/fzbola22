@@ -29,7 +29,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ embedUrl }) => {
     position: "relative",
     paddingTop: "56.25%",
     width: "100%",
-    height: "auto"
+    height: "auto",
+    overflow: "hidden"
   }}
 >
   <iframe

@@ -16,8 +16,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const WatchHeader: React.FC<MatchDataProps> = ({
   home_team_logo_url,
   away_team_logo_url,
-  home_team_name,
-  away_team_name,
   API_id,
   API_Url,
 }) => {
@@ -32,31 +30,51 @@ const WatchHeader: React.FC<MatchDataProps> = ({
   );
 
   if (!data) {
-    return <div style={{textAlign:'center'}}>Loading...</div>;
+    return (
+      <div
+        className={styles.watchhead}
+        style={{padding:'1em'}}
+      >
+        <center>
+        <video width={20} height={20} autoPlay loop muted playsInline>
+            <source src="/assets/img/loading.webm" type="video/webm" />
+         </video>
+        </center>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div style={{textAlign:'center'}}>Error: {error.message}</div>;
   }
 
   return (
-    <table>
+    <div style={{ textTransform: 'uppercase' }}>
+    <div className={styles.date} style={{textAlign:'center'}}>
+    <span style={{ fontWeight: 'bold',fontSize:'9px' }}>
+      {data.competition_name} {data.area_name ? `- ${data.area_name}` : ''} &#10088; {data.round_name} &#10089;
+    </span>
+  </div>
+    <div className={styles.watchhead}
+      style={{fontSize:'15px'}}
+    >
+    <table style={{ width: '100%', tableLayout: 'fixed' }}>
       <tbody>
       <tr style={{ border: '1px solid #3D3D3D' }}>
-        <td className={styles.col5} style={{ textAlign: 'left' }}>
+        <td className={styles.col5} style={{ textAlign: 'right', width: '30%' }}>
             <Image
-              className={`${styles.iconimg} ${styles.sdwteam}`}
               src={home_team_logo_url}
-              alt={home_team_name}
-              width={14}
-              height={14}
+              alt={data.home_name}
+              width={64}
+              height={0}
+              style={{
+                width: 'auto',
+                height: '30px',
+              }}
               priority
             />
-           <span id={styles.upsmatchtxt}>
-            &nbsp;&nbsp;&nbsp;{home_team_name}
-          </span>
         </td>
-        <td className={styles.col2} style={{ textAlign: 'center' }}>
+        <td style={{ width: '15%', textAlign: 'center' }}>
           <span>
             {data.live ? (
               <span className={styles.watchscore}>
@@ -67,7 +85,7 @@ const WatchHeader: React.FC<MatchDataProps> = ({
                 )}
                 {data.et && !data.ps && (
                   <span>
-                    {data.et[0]}&nbsp;-&nbsp;{data.et[1]} aet
+                    ET.&nbsp;{data.et[0]}&nbsp;-&nbsp;{data.et[1]}
                   </span>
                 )}
                 {data.ps && (
@@ -86,13 +104,13 @@ const WatchHeader: React.FC<MatchDataProps> = ({
                 )}
                 {data.et && !data.ps && (
                   <span>
-                    {data.et[0]}&nbsp;-&nbsp;{data.et[1]} aet
+                    ET.&nbsp;{data.et[0]}&nbsp;-&nbsp;{data.et[1]}
                   </span>
                 )}
                 {data.ps && (
                   <span>
                     {" "}
-                    p.{data.ps[0]}-{data.ps[1]}
+                    P.&nbsp;{data.ps[0]}-{data.ps[1]}
                   </span>
                 )}
               </span>
@@ -101,23 +119,25 @@ const WatchHeader: React.FC<MatchDataProps> = ({
             )}
           </span>
         </td>
-        <td className={styles.col5} style={{ textAlign: 'right' }}>
-          <span id={styles.upsmatchtxt}>
-            {away_team_name}&nbsp;&nbsp;&nbsp;
-          </span>
+        <td className={styles.col5} style={{ textAlign: 'left', width: '30%' }}>
             <Image
-              className={`${styles.iconimg} ${styles.sdwteam}`}
               src={away_team_logo_url}
-              alt={away_team_name}
-              width={14}
-              height={14}
+              alt={data.away_name}
+              width={64}
+              height={0}
+              style={{
+                width: 'auto',
+                height: '30px',
+              }}
               priority
             />
         </td>
       </tr>
     </tbody>
   </table>  
-  );
+  </div>
+  </div>
+  ); 
 };
 
 export default WatchHeader;
